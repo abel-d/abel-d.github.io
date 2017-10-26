@@ -4,6 +4,7 @@ cp -R /Users/abel_d/GitProject/gitHubBlog/blog/* /Users/abel_d/GitProject/gitHub
 hexo g
 hexo d
 cd /Users/abel_d/GitProject/gitHubBlog/abel-d.github.io
+git status
 git add .
 git commit -m "backup blog"
-git push
+git push -f
