@@ -102,7 +102,7 @@ All of them are enabled by default. You can edit them in `widget` setting.
 
 - **default** - Download [Fancybox] and [Font Awesome].
 - **fontawesome** - Only download [Font Awesome].
-- **fancybox** - Only download [Fancybox].
+- **fancybox** - Only download [ [Fancybox](http://fancyapps.com/fancybox/)].
 - **clean** - Clean temporarily files and downloaded files.
 
 [Hexo]: http://zespia.tw/hexo/
