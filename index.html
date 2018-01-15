@@ -155,6 +155,84 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-分享一个自用的部署和备份blog的脚本" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/01/15/分享一个自用的部署和备份blog的脚本/">分享一个自用的部署和备份blog的脚本</a>
+    </h1>
+  
+
+        
+        <a href="/2018/01/15/分享一个自用的部署和备份blog的脚本/" class="archive-article-date">
+  	<time datetime="2018-01-15T07:59:38.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-01-15</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h5 id="此脚本就是把要手工输入的重复工作写成了shell，脚本如下"><a href="#此脚本就是把要手工输入的重复工作写成了shell，脚本如下" class="headerlink" title="此脚本就是把要手工输入的重复工作写成了shell，脚本如下"></a>此脚本就是把要手工输入的重复工作写成了shell，脚本如下</h5><figure class="highlight powershell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#!/user/bin/bash</span></div><div class="line"><span class="comment">#backup blog source code</span></div><div class="line">hexo clean</div><div class="line">git add .</div><div class="line">git commit -m <span class="string">"backup blog"</span></div><div class="line">git push </div><div class="line"></div><div class="line"><span class="comment">#deploy blog to another repo</span></div><div class="line">hexo g</div><div class="line"><span class="comment">#hexo d 下面的cd命令是进入要上传到GitHub上的目录，~ ：这个建议全路径，我式为隐藏我的home目录才改的</span></div><div class="line">cd ~/GitProject/gitHubBlog/abel-d.github.io</div><div class="line">cp -R ~/GitProject/gitHubBlog/blog/public/* /Users/abel_d/GitProject/gitHubBlog/abel-d.github.io</div><div class="line"></div><div class="line">git add .</div><div class="line">git commit -m <span class="string">"update gitHubBlog"</span></div><div class="line">git push</div></pre></td></tr></table></figure>
+<h5 id="脚本编写完成就是执行了"><a href="#脚本编写完成就是执行了" class="headerlink" title="脚本编写完成就是执行了"></a>脚本编写完成就是执行了</h5><p>​    <code>sh 你的脚本名字.sh</code></p>
+<hr>
+<p><a href="https://hexo.io/zh-cn/docs/commands.html" target="_blank" rel="external">hexo官方命令文档</a></p>
+<p><a href="https://www.liaoxuefeng.com/wiki/0013739516305929606dd18361248578c67b8067c8c017b000" target="_blank" rel="external">git教程推荐廖雪峰大神的</a></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">部署 备份</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/01/15/分享一个自用的部署和备份blog的脚本/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-blog配置自定义域名" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -419,6 +497,10 @@ getOwnMetadataKeys:function(t){return o(i(t),arguments.length<2?void 0:u(argumen
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">域名</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">部署 备份</a>
               </li>
              
               <li class="article-tag-list-item">
