@@ -8,12 +8,16 @@
   <link rel="dns-prefetch" href="https://abel-d.github.io">
   <title>Abel・d的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
+  <meta name="description" content="对未知的探索">
+<meta property="og:type" content="website">
 <meta property="og:title" content="Abel・d的博客">
 <meta property="og:url" content="https://abel-d.github.io/index.html">
 <meta property="og:site_name" content="Abel・d的博客">
+<meta property="og:description" content="对未知的探索">
+<meta property="og:locale" content="CH">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Abel・d的博客">
+<meta name="twitter:description" content="对未知的探索">
   
     <link rel="alternative" href="/atom.xml" title="Abel・d的博客" type="application/atom+xml">
   
@@ -48,7 +52,7 @@
 		  <h1 class="header-author"><a href="">Abel・d</a></h1>
 		</hgroup>
 		
-		<p class="header-subtitle">Abel・d的博客</p>
+		<p class="header-subtitle">探索</p>
 		
 
 		<nav class="header-menu">
@@ -106,7 +110,7 @@
 			  <h1 class="header-author js-header-author">Abel・d</h1>
 			</hgroup>
 			
-			<p class="header-subtitle"><i class="icon icon-quo-left"></i>Abel・d的博客<i class="icon icon-quo-right"></i></p>
+			<p class="header-subtitle"><i class="icon icon-quo-left"></i>探索<i class="icon icon-quo-right"></i></p>
 			
 			
 			
@@ -150,6 +154,99 @@
           </div>
           <div id="js-content" class="content-ll">
             
+  
+    <article id="post-blog配置自定义域名" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/01/15/blog配置自定义域名/">blog配置自定义域名.md</a>
+    </h1>
+  
+
+        
+        <a href="/2018/01/15/blog配置自定义域名/" class="archive-article-date">
+  	<time datetime="2018-01-15T07:46:59.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-01-15</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <ol>
+<li><p>买域名，阿里云买的方便省事。域名买了备案还要个2周时间</p>
+</li>
+<li><p>在阿里云进入控制台，依次点击<strong>域名</strong>—&gt;<strong>云解析<code>DNS</code></strong>—&gt;<strong>解析设置</strong>，点击<strong>新手引导</strong>，填入<code>gitHub blog</code>的<code>IP</code>地址</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">这两个IP由gitHub提供 </div><div class="line">&gt; 192.30.252.153</div><div class="line">&gt; 192.30.252.154</div></pre></td></tr></table></figure>
+</li>
+<li><p>配置完成可以用如下命令测试是否成功<br><code>dig +noall +answer 你的域名(如我的:canondin.cn)</code></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="meta">$</span> dig canondin.cn  +noall +answer</div><div class="line">; &lt;&lt;&gt;&gt; DiG 9.9.7-P3 &lt;&lt;&gt;&gt; canondin.cn +noall +answer</div><div class="line"></div><div class="line">;; global options: +cmd</div><div class="line"></div><div class="line">canondin.cn.		30	IN	A	192.30.252.154</div><div class="line"></div><div class="line">canondin.cn.		30	IN	A	192.30.252.153</div></pre></td></tr></table></figure>
+</li>
+<li><p>进入gitHub，找到你的博客项目，点击<strong>Settings</strong>，找到<strong>GitHub Pages</strong>下面的<strong>Custom domain</strong>填入你购买的域名，点击<strong>Save</strong>。等待几秒后，就可以用此域名访问你的<code>gitHub</code>博客啦</p>
+</li>
+</ol>
+<hr>
+<p>帮助文档中看到的DNS解析的记录类型说明</p>
+<ul>
+<li>A record，将域名指向一个IPV4地址</li>
+<li>CNAME，将域名指向另外一个域名</li>
+</ul>
+<p><a href="https://help.github.com/articles/adding-or-removing-a-custom-domain-for-your-github-pages-site/" target="_blank" rel="external">gitHub添加域名帮助</a></p>
+<p><a href="https://help.github.com/articles/setting-up-an-apex-domain/" target="_blank" rel="external">gitHub设置域名帮助</a></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">域名</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/01/15/blog配置自定义域名/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
   
     <article id="post-hexo-gitHub部署不能立刻显示原因" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
@@ -238,7 +335,7 @@
   <div class="outer">
     <div id="footer-info">
     	<div class="footer-left">
-    		&copy; 2017 Abel・d
+    		&copy; 2018 Abel・d
     	</div>
       	<div class="footer-right">
       		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
@@ -319,6 +416,10 @@ getOwnMetadataKeys:function(t){return o(i(t),arguments.length<2?void 0:u(argumen
             <input type="checkbox" q-on="click:toggleTag(e)" q-attr="checked:showTags">
           </label>
           <ul class="article-tag-list" q-show="showTags">
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">域名</a>
+              </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">gitHubPage error</a>
