@@ -149,6 +149,150 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-Nexus私服相关" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/02/25/Nexus私服相关/">Nexus私服相关</a>
+    </h1>
+  
+
+        
+        <a href="/2018/02/25/Nexus私服相关/" class="archive-article-date">
+  	<time datetime="2018-02-25T15:05:17.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-02-25</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>本篇文章只写一些个人认为值得注意的地方，一定要<strong><em>自己动手</em></strong>做一边。</p>
+<p><a href="https://www.jianshu.com/p/e4a3ab0298df" target="_blank" rel="external">这篇写的比较全，可以先看</a></p>
+<p><a href="">书：Maven实战第九章</a></p>
+</blockquote>
+<h5 id="一、安装Nexus私服"><a href="#一、安装Nexus私服" class="headerlink" title="一、安装Nexus私服"></a>一、安装Nexus私服</h5><p>我这是在Mac上安装的，版本不是最新的，最新移步 <a href="https://www.sonatype.com/download-oss-sonatype" target="_blank" rel="external"><strong>官网</strong></a>。<a href="https://www.jianshu.com/p/e4a3ab0298df" target="_blank" rel="external">详细的安装介绍</a>。</p>
+<blockquote>
+<p>brew install nexus</p>
+</blockquote>
+<p>等了20分钟，终于安装完成了，这些命令放在看得见的地方备用。</p>
+<blockquote>
+<p>nexus start : 启动</p>
+<p>nexus status : 状态</p>
+<p>nexus stop : 停止</p>
+<p>nexus restart : 重启</p>
+<p>访问：localhost:8081/nexus</p>
+<p>用户名/密码：admin/admin123</p>
+</blockquote>
+<h5 id="二、什么是私服？私服各种仓库的作用是什么？"><a href="#二、什么是私服？私服各种仓库的作用是什么？" class="headerlink" title="二、什么是私服？私服各种仓库的作用是什么？"></a>二、什么是私服？私服各种仓库的作用是什么？</h5><ul>
+<li><p>私服，就是架在你的PC和远程仓库之间的“中转站”。相当于一个不赚差价的中间商。</p>
+</li>
+<li><p>私服仓库种类和作用</p>
+<ul>
+<li><p><code>hosted</code>的宿主仓库</p>
+<blockquote>
+<p>主要部署无法从公共仓库获取的构件（如 oracle 的 JDBC 驱动）以及自己或第三方的项目构件</p>
+</blockquote>
+</li>
+<li><p><code>proxy</code>的代理仓库</p>
+<blockquote>
+<p>代理公共的远程仓库，如<a href="http://central.maven.org/maven2/" target="_blank" rel="external">Central Repository</a></p>
+</blockquote>
+</li>
+<li><p><code>virtual</code>的虚拟仓库</p>
+<blockquote>
+<p>适配Maven1转换格式的，可以忽略</p>
+</blockquote>
+</li>
+<li><p><code>group</code>的<strong>仓库组</strong></p>
+<blockquote>
+<p>为了统一管理多个仓库用。本身不是库，是上面其他库的一个聚合，要构建只需向仓库组要就可以了，方便管理的特点正好吻合其概念。</p>
+</blockquote>
+</li>
+</ul>
+</li>
+</ul>
+<h5 id="三、要想用私服，在项目pom怎么写？不改pom，如何全局生效使用私服？"><a href="#三、要想用私服，在项目pom怎么写？不改pom，如何全局生效使用私服？" class="headerlink" title="三、要想用私服，在项目pom怎么写？不改pom，如何全局生效使用私服？"></a>三、要想用私服，在项目<code>pom</code>怎么写？不改<code>pom</code>，如何全局生效使用私服？</h5><blockquote>
+<p>这里所说的都是针对自己PC上Maven如何配置修改的。</p>
+</blockquote>
+<ul>
+<li><p>加入下面依赖，即可在这个项目中使用私服，换一个项目就不行了。</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">repositories</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">repository</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">id</span>&gt;</span>nexus<span class="tag">&lt;/<span class="name">id</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">name</span>&gt;</span>Nexus<span class="tag">&lt;/<span class="name">name</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">url</span>&gt;</span>http://localhost:8081/nexus/content/groups/public/<span class="tag">&lt;/<span class="name">url</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">releases</span>&gt;</span><span class="tag">&lt;<span class="name">enabled</span>&gt;</span>true<span class="tag">&lt;/<span class="name">enabled</span>&gt;</span><span class="tag">&lt;/<span class="name">releases</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">snapshots</span>&gt;</span><span class="tag">&lt;<span class="name">enabled</span>&gt;</span>true<span class="tag">&lt;/<span class="name">enabled</span>&gt;</span><span class="tag">&lt;/<span class="name">snapshots</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">repository</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">repositories</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">pluginRepositories</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">pluginRepository</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">id</span>&gt;</span>nexus<span class="tag">&lt;/<span class="name">id</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">name</span>&gt;</span>Nexus<span class="tag">&lt;/<span class="name">name</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">url</span>&gt;</span>http://localhost:8081/nexus/content/groups/public/<span class="tag">&lt;/<span class="name">url</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">releases</span>&gt;</span><span class="tag">&lt;<span class="name">enabled</span>&gt;</span>true<span class="tag">&lt;/<span class="name">enabled</span>&gt;</span><span class="tag">&lt;/<span class="name">releases</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">snapshots</span>&gt;</span><span class="tag">&lt;<span class="name">enabled</span>&gt;</span>true<span class="tag">&lt;/<span class="name">enabled</span>&gt;</span><span class="tag">&lt;/<span class="name">snapshots</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">pluginRepository</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">pluginRepositories</span>&gt;</span></div></pre></td></tr></table></figure>
+</li>
+<li><p>私服全局生效，要修改<code>idea</code>中配置的<code>Maven</code>的<code>settings.xml</code></p>
+<ul>
+<li><p>配置私服的镜像以使得依赖都走私服获取，配置<code>profile</code>目的是开启对构件发布版的支持。其中<code>profile</code>中的<code>url</code>标签已经没用了，因为请求都走<code>mirror</code>中的<code>url</code>了。到此已经可以走私服获取依赖啦。</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div></pre></td><td class="code"><pre><div class="line">     </div><div class="line"><span class="tag">&lt;<span class="name">mirrors</span>&gt;</span>   </div><div class="line">   <span class="tag">&lt;<span class="name">mirror</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">id</span>&gt;</span>nexus<span class="tag">&lt;/<span class="name">id</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">mirrorOf</span>&gt;</span>*<span class="tag">&lt;/<span class="name">mirrorOf</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">name</span>&gt;</span>for nexus <span class="tag">&lt;/<span class="name">name</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">url</span>&gt;</span>http://localhost:8081/nexus/content/groups/public/<span class="tag">&lt;/<span class="name">url</span>&gt;</span></div><div class="line">   <span class="tag">&lt;/<span class="name">mirror</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">mirrors</span>&gt;</span></div><div class="line"> <span class="tag">&lt;<span class="name">profile</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">id</span>&gt;</span>nexus<span class="tag">&lt;/<span class="name">id</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">repositories</span>&gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">repository</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">id</span>&gt;</span>central<span class="tag">&lt;/<span class="name">id</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">name</span>&gt;</span>central<span class="tag">&lt;/<span class="name">name</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">url</span>&gt;</span>http://central<span class="tag">&lt;/<span class="name">url</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">releases</span>&gt;</span><span class="tag">&lt;<span class="name">enabled</span>&gt;</span>true<span class="tag">&lt;/<span class="name">enabled</span>&gt;</span><span class="tag">&lt;/<span class="name">releases</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">snapshots</span>&gt;</span><span class="tag">&lt;<span class="name">enabled</span>&gt;</span>true<span class="tag">&lt;/<span class="name">enabled</span>&gt;</span><span class="tag">&lt;/<span class="name">snapshots</span>&gt;</span></div><div class="line">      <span class="tag">&lt;/<span class="name">repository</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">repositories</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">pluginRepositories</span>&gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">pluginRepository</span>&gt;</span></div><div class="line">          <span class="tag">&lt;<span class="name">id</span>&gt;</span>central<span class="tag">&lt;/<span class="name">id</span>&gt;</span></div><div class="line">          <span class="tag">&lt;<span class="name">name</span>&gt;</span>central<span class="tag">&lt;/<span class="name">name</span>&gt;</span></div><div class="line">          <span class="tag">&lt;<span class="name">url</span>&gt;</span>http://central<span class="tag">&lt;/<span class="name">url</span>&gt;</span></div><div class="line">          <span class="tag">&lt;<span class="name">releases</span>&gt;</span><span class="tag">&lt;<span class="name">enabled</span>&gt;</span>true<span class="tag">&lt;/<span class="name">enabled</span>&gt;</span><span class="tag">&lt;/<span class="name">releases</span>&gt;</span></div><div class="line">          <span class="tag">&lt;<span class="name">snapshots</span>&gt;</span><span class="tag">&lt;<span class="name">enabled</span>&gt;</span>true<span class="tag">&lt;/<span class="name">enabled</span>&gt;</span><span class="tag">&lt;/<span class="name">snapshots</span>&gt;</span></div><div class="line">      <span class="tag">&lt;/<span class="name">pluginRepository</span>&gt;</span></div><div class="line">  <span class="tag">&lt;/<span class="name">pluginRepositories</span>&gt;</span></div><div class="line">  <span class="tag">&lt;/<span class="name">profile</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">profiles</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">activeProfiles</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">activeProfile</span>&gt;</span>nexus<span class="tag">&lt;/<span class="name">activeProfile</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">activeProfiles</span>&gt;</span></div></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+<h5 id="四、本地如何发布构建到私服呢？"><a href="#四、本地如何发布构建到私服呢？" class="headerlink" title="四、本地如何发布构建到私服呢？"></a>四、本地如何发布构建到私服呢？</h5><ul>
+<li><p>首先，发布构建到私服需要认证，那么就需要在<code>settings.xml</code>中加认证信息。</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">servers</span>&gt;</span>  </div><div class="line">  <span class="tag">&lt;<span class="name">server</span>&gt;</span></div><div class="line">     <span class="tag">&lt;<span class="name">id</span>&gt;</span>releases<span class="tag">&lt;/<span class="name">id</span>&gt;</span></div><div class="line">     <span class="tag">&lt;<span class="name">username</span>&gt;</span>admin<span class="tag">&lt;/<span class="name">username</span>&gt;</span></div><div class="line">     <span class="tag">&lt;<span class="name">password</span>&gt;</span>admin123<span class="tag">&lt;/<span class="name">password</span>&gt;</span></div><div class="line">   <span class="tag">&lt;/<span class="name">server</span>&gt;</span></div><div class="line">   <span class="tag">&lt;<span class="name">server</span>&gt;</span></div><div class="line">     <span class="tag">&lt;<span class="name">id</span>&gt;</span>snapshots<span class="tag">&lt;/<span class="name">id</span>&gt;</span></div><div class="line">     <span class="tag">&lt;<span class="name">username</span>&gt;</span>admin<span class="tag">&lt;/<span class="name">username</span>&gt;</span></div><div class="line">     <span class="tag">&lt;<span class="name">password</span>&gt;</span>admin123<span class="tag">&lt;/<span class="name">password</span>&gt;</span></div><div class="line">   <span class="tag">&lt;/<span class="name">server</span>&gt;</span></div><div class="line"> <span class="tag">&lt;/<span class="name">servers</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>​</p>
+</li>
+</ul>
+<ul>
+<li><p>其次，需要在你项目<code>pom</code>中加配置。<strong>注意</strong>：下面pom中的2个<code>repository.id</code>与上面<code>settings.xml</code>中的2个<code>server.id</code>要一致。</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">distributionManagement</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">repository</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">id</span>&gt;</span>releases<span class="tag">&lt;/<span class="name">id</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">url</span>&gt;</span>http://localhost:8081/nexus/content/repositories/releases<span class="tag">&lt;/<span class="name">url</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">repository</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">snapshotRepository</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">id</span>&gt;</span>snapshots<span class="tag">&lt;/<span class="name">id</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">url</span>&gt;</span>http://localhost:8081/nexus/content/repositories/snapshots<span class="tag">&lt;/<span class="name">url</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">snapshotRepository</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">distributionManagement</span>&gt;</span></div></pre></td></tr></table></figure>
+</li>
+<li><p>一条测试命令</p>
+<blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">&gt; curl -u username:password http://url/artifactory/libs-snapshot-local/com/myproject/api/1.0-SNAPSHOT/api-1.0-20160128.114425-1.jar --request PUT --data target/api-1.0-SNAPSHOT.jar </div><div class="line">&gt;</div></pre></td></tr></table></figure>
+</blockquote>
+</li>
+</ul>
+<h5 id="五、关于idea中Maven-Projects下面的Lifecycle的deploy、Plugins的deploy、mvn-clean-deploy的区别"><a href="#五、关于idea中Maven-Projects下面的Lifecycle的deploy、Plugins的deploy、mvn-clean-deploy的区别" class="headerlink" title="五、关于idea中Maven Projects下面的Lifecycle的deploy、Plugins的deploy、mvn clean deploy的区别"></a>五、关于idea中<code>Maven Projects</code>下面的<code>Lifecycle的deploy</code>、<code>Plugins的deploy</code>、<code>mvn clean deploy</code>的区别</h5><p>如果idea中Maven配置文件<code>settings.xml</code>与PC安装的Maven的<code>settings.xml</code>一致，那么<code>Lifecycle</code>的<code>deploy</code>与<code>mvn clean deploy</code>行为一致，否则会有一个报<code>Return code is 401…</code>，即未认证，<a href="http://blog.csdn.net/happyteafriends/article/details/8174110" target="_blank" rel="external">这儿是错误详情</a>。<code>Plugins</code>下面的都是单独的<code>Goal</code>，一次只执行一个<code>Goal</code>。其它2个是执行的生命周期的一个或多个阶段。</p>
+<hr>
+<p>参考：</p>
+<p><a href="https://my.oschina.net/mzdbxqh/blog/849040" target="_blank" rel="external">关于生命周期、命令行和插件</a></p>
+<p><a href="https://www.jianshu.com/p/fd43b3d0fdb0" target="_blank" rel="external">Maven 生命周期</a></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/02/25/Nexus私服相关/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-springboot-whitelabel-Error" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
