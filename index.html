@@ -149,6 +149,99 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-Git配置多用户" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/03/14/Git配置多用户/">Git配置多用户</a>
+    </h1>
+  
+
+        
+        <a href="/2018/03/14/Git配置多用户/" class="archive-article-date">
+  	<time datetime="2018-03-14T13:19:16.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-03-14</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h5 id="一、起因"><a href="#一、起因" class="headerlink" title="一、起因"></a>一、起因</h5><blockquote>
+<p>我的gitHub和码云都是用的同一个邮箱注册的并且用户名也一样，所以一份<code>SSH</code>公钥可以共用，某一天去了另一家公司给我配置了另外一个邮箱，并且其有自己的gitHub实现，那么问题来了，<strong>两个邮箱的git用户怎么并存?</strong></p>
+</blockquote>
+<h5 id="二、经过"><a href="#二、经过" class="headerlink" title="二、经过"></a>二、经过</h5><blockquote>
+<p>#如果你想都使用<code>ssh clone</code>代码库 ，那么</p>
+<p><code>cd ~/.ssh</code></p>
+<p><code>ssh-keygen -t rsa -C &quot;youremail@xx.com&quot;</code></p>
+<p>#两个邮箱当然两个<code>id_rsa_xxx</code>,保证这两个名称不一样</p>
+</blockquote>
+<p>上面执行完以后，添加对应的<code>id_rsa_xxx.pub</code>到对应的版本库设置下的<code>SSH</code>公钥中。</p>
+<p><strong>最后</strong>，修改或新建名为<code>config</code>的配置文件，如下</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"># Host后面写一个url_A,如果有端口则加上Port参数</div><div class="line">Host url_A           (github.com)</div><div class="line">    User yourgit_username</div><div class="line">    Hostname url_A   (github.com)</div><div class="line">    IdentityFile ~./ssh/id_rsa</div><div class="line">    (Port your_port)</div></pre></td></tr></table></figure>
+<h4 id="三、结果"><a href="#三、结果" class="headerlink" title="三、结果"></a>三、结果</h4><p>说一说git的配置文件优先级</p>
+<blockquote>
+<ol>
+<li><code>/etc/gitconfig</code>:适用于系统用户，范围最大，优先级最低，一般没用<code>--system</code>配置过则没这个配置文件</li>
+<li><code>~/.gitconfig</code>：全局配置文件，优先级高于<code>1</code>，用<code>--global</code>指定</li>
+<li>项目里<code>.git/config</code>:克隆一个库就有一个次目录，优先级最高</li>
+</ol>
+</blockquote>
+<p>提供一个备用方案，万一你克隆<code>SSH</code>协议的<code>Url</code>没成功呢，尴尬不失礼貌的用下面的方法，还不用改你的全局配置。</p>
+<blockquote>
+<p>Https克隆代码会先读全局配置的user.name和user.email，与目标库用户名不匹配的话会让你输入的。</p>
+<p>然后，进入克隆好的项目中执行以下命令，</p>
+<p>git config user.name = yourname</p>
+<p>git config user.email = youremail</p>
+</blockquote>
+<hr>
+<p>参考</p>
+<p><a href="http://blog.csdn.net/joe_007/article/details/7276195" target="_blank" rel="external">Git config配置</a></p>
+<p><a href="https://www.jianshu.com/p/b02645fff791" target="_blank" rel="external">Git多用户配置</a></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/03/14/Git配置多用户/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-Nexus私服相关" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -264,6 +357,85 @@
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2018/02/25/Nexus私服相关/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-执行npm相关命令报错code-EINTEGRITY" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/02/09/执行npm相关命令报错code-EINTEGRITY/">执行npm相关命令报错code EINTEGRITY</a>
+    </h1>
+  
+
+        
+        <a href="/2018/02/09/执行npm相关命令报错code-EINTEGRITY/" class="archive-article-date">
+  	<time datetime="2018-02-09T04:06:33.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-02-09</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h5 id="问题：执行npm-相关命令如npm-install，报错如下"><a href="#问题：执行npm-相关命令如npm-install，报错如下" class="headerlink" title="问题：执行npm 相关命令如npm install，报错如下:"></a>问题：执行npm 相关命令如<code>npm install</code>，报错如下:</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">npm ERR! code EINTEGRITY</div><div class="line">npm ERR! sha512-mt839mCsI5hzdBJLf1iRBwt610P35iUfvqLVuL7VFdanUwRBAmGtbsjdGIuzegplR95xx+fTHE0vBMuMJp1sLQ== integrity checksum failed when using sha512: wanted sha512-mt839mCsI5hzdBJLf1iRBwt610P35iUfvqLVuL7VFdanUwRBAmGtbsjdGIuzegplR95xx+fTHE0vBMuMJp1sLQ== but got sha512-vUaMcWXgbeV/ouYWjwDSL5JV7u6Kp397xRShl7o2a0nVQrmA1Re2o3whi/juhn3PTfzV4aIxRlMBEcqZt0TKTg==.</div></pre></td></tr></table></figure>
+<h5 id="解决办法执行如下命令中的一条，总有一条管用，我这次是第3条命令修复了问题。"><a href="#解决办法执行如下命令中的一条，总有一条管用，我这次是第3条命令修复了问题。" class="headerlink" title="解决办法执行如下命令中的一条，总有一条管用，我这次是第3条命令修复了问题。"></a>解决办法执行如下命令中的一条，总有一条管用，我这次是第3条命令修复了问题。</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">npm cache verify</div><div class="line">npm cache clean</div><div class="line">npm cache clean --force</div><div class="line">npm install npm@latest -g</div><div class="line">npm i -g npm</div></pre></td></tr></table></figure>
+<hr>
+<p>参考</p>
+<p><a href="https://www.npmjs.com/get-npm" target="_blank" rel="external">官方文档</a></p>
+<p><a href="https://www.jianshu.com/p/2899bd2a0a20" target="_blank" rel="external">npm ERR! code EINTEGRITY 解决方案</a></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">npm</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/02/09/执行npm相关命令报错code-EINTEGRITY/">展开全文 >></a>
         </p>
       
 
@@ -732,6 +904,10 @@ getOwnMetadataKeys:function(t){return o(i(t),arguments.length<2?void 0:u(argumen
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">部署 备份</a>
               </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">npm</a>
+              </li>
             
             <div class="clearfix"></div>
           </ul>
@@ -797,7 +973,7 @@ getOwnMetadataKeys:function(t){return o(i(t),arguments.length<2?void 0:u(argumen
     
     	<section class="tools-section tools-section-me" q-show="aboutme">
   	  	
-  	  		<div class="aboutme-wrap" id="js-aboutme">终生学习者&lt;br&gt;&lt;br&gt;相信我 你并不孤独</div>
+  	  		<div class="aboutme-wrap" id="js-aboutme">终生学习者&lt;br&gt;既然学了，就要有输出</div>
   	  	
     	</section>
     

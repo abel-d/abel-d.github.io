@@ -6,18 +6,19 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://canondin.cn">
-  <title>Archives: 2018/1 | Abel・d的博客</title>
+  <title>Git配置多用户 | Abel・d的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="对未知的探索">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Abel・d的博客">
-<meta property="og:url" content="http://canondin.cn/archives/2018/01/index.html">
+  <meta name="description" content="一、起因 我的gitHub和码云都是用的同一个邮箱注册的并且用户名也一样，所以一份SSH公钥可以共用，某一天去了另一家公司给我配置了另外一个邮箱，并且其有自己的gitHub实现，那么问题来了，两个邮箱的git用户怎么并存?  二、经过 #如果你想都使用ssh clone代码库 ，那么 cd ~/.ssh ssh-keygen -t rsa -C &amp;quot;youremail@xx.com&amp;quo">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Git配置多用户">
+<meta property="og:url" content="http://canondin.cn/2018/03/14/Git配置多用户/index.html">
 <meta property="og:site_name" content="Abel・d的博客">
-<meta property="og:description" content="对未知的探索">
+<meta property="og:description" content="一、起因 我的gitHub和码云都是用的同一个邮箱注册的并且用户名也一样，所以一份SSH公钥可以共用，某一天去了另一家公司给我配置了另外一个邮箱，并且其有自己的gitHub实现，那么问题来了，两个邮箱的git用户怎么并存?  二、经过 #如果你想都使用ssh clone代码库 ，那么 cd ~/.ssh ssh-keygen -t rsa -C &amp;quot;youremail@xx.com&amp;quo">
 <meta property="og:locale" content="CH">
+<meta property="og:updated_time" content="2018-03-14T13:34:25.733Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Abel・d的博客">
-<meta name="twitter:description" content="对未知的探索">
+<meta name="twitter:title" content="Git配置多用户">
+<meta name="twitter:description" content="一、起因 我的gitHub和码云都是用的同一个邮箱注册的并且用户名也一样，所以一份SSH公钥可以共用，某一天去了另一家公司给我配置了另外一个邮箱，并且其有自己的gitHub实现，那么问题来了，两个邮箱的git用户怎么并存?  二、经过 #如果你想都使用ssh clone代码库 ，那么 cd ~/.ssh ssh-keygen -t rsa -C &amp;quot;youremail@xx.com&amp;quo">
   
     <link rel="alternative" href="/atom.xml" title="Abel・d的博客" type="application/atom+xml">
   
@@ -147,136 +148,197 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-Git配置多用户" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Git配置多用户
+    </h1>
+  
+
+        
+        <a href="/2018/03/14/Git配置多用户/" class="archive-article-date">
+  	<time datetime="2018-03-14T13:19:16.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-03-14</time>
+</a>
+        
+      </header>
     
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h5 id="一、起因"><a href="#一、起因" class="headerlink" title="一、起因"></a>一、起因</h5><blockquote>
+<p>我的gitHub和码云都是用的同一个邮箱注册的并且用户名也一样，所以一份<code>SSH</code>公钥可以共用，某一天去了另一家公司给我配置了另外一个邮箱，并且其有自己的gitHub实现，那么问题来了，<strong>两个邮箱的git用户怎么并存?</strong></p>
+</blockquote>
+<h5 id="二、经过"><a href="#二、经过" class="headerlink" title="二、经过"></a>二、经过</h5><blockquote>
+<p>#如果你想都使用<code>ssh clone</code>代码库 ，那么</p>
+<p><code>cd ~/.ssh</code></p>
+<p><code>ssh-keygen -t rsa -C &quot;youremail@xx.com&quot;</code></p>
+<p>#两个邮箱当然两个<code>id_rsa_xxx</code>,保证这两个名称不一样</p>
+</blockquote>
+<p>上面执行完以后，添加对应的<code>id_rsa_xxx.pub</code>到对应的版本库设置下的<code>SSH</code>公钥中。</p>
+<p><strong>最后</strong>，修改或新建名为<code>config</code>的配置文件，如下</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"># Host后面写一个url_A,如果有端口则加上Port参数</div><div class="line">Host url_A           (github.com)</div><div class="line">    User yourgit_username</div><div class="line">    Hostname url_A   (github.com)</div><div class="line">    IdentityFile ~./ssh/id_rsa</div><div class="line">    (Port your_port)</div></pre></td></tr></table></figure>
+<h4 id="三、结果"><a href="#三、结果" class="headerlink" title="三、结果"></a>三、结果</h4><p>说一说git的配置文件优先级</p>
+<blockquote>
+<ol>
+<li><code>/etc/gitconfig</code>:适用于系统用户，范围最大，优先级最低，一般没用<code>--system</code>配置过则没这个配置文件</li>
+<li><code>~/.gitconfig</code>：全局配置文件，优先级高于<code>1</code>，用<code>--global</code>指定</li>
+<li>项目里<code>.git/config</code>:克隆一个库就有一个次目录，优先级最高</li>
+</ol>
+</blockquote>
+<p>提供一个备用方案，万一你克隆<code>SSH</code>协议的<code>Url</code>没成功呢，尴尬不失礼貌的用下面的方法，还不用改你的全局配置。</p>
+<blockquote>
+<p>Https克隆代码会先读全局配置的user.name和user.email，与目标库用户名不匹配的话会让你输入的。</p>
+<p>然后，进入克隆好的项目中执行以下命令，</p>
+<p>git config user.name = yourname</p>
+<p>git config user.email = youremail</p>
+</blockquote>
+<hr>
+<p>参考</p>
+<p><a href="http://blog.csdn.net/joe_007/article/details/7276195" target="_blank" rel="external">Git config配置</a></p>
+<p><a href="https://www.jianshu.com/p/b02645fff791" target="_blank" rel="external">Git多用户配置</a></p>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
       
       
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2018" class="archive-year">2018</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/01/17/springboot-whitelabel-Error/" class="archive-article-date">
-  	<time datetime="2018-01-17T05:32:18.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-01-17</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/01/17/springboot-whitelabel-Error/">springboot_whitelabel Error</a>
-    </h1>
-  
+      
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Spring,Spring Boot</a>
-        		</li>
-      		
-		</ul>
-	</div>
+      
 
-          
-
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="http://s.jiathis.com/qrcode.php?url=http://canondin.cn/2018/03/14/Git配置多用户/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/01/15/分享一个自用的部署和备份blog的脚本/" class="archive-article-date">
-  	<time datetime="2018-01-15T07:59:38.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-01-15</time>
-</a>
+<nav id="article-nav">
+  
+  
+    <a href="/2018/02/25/Nexus私服相关/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Nexus私服相关</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
+        
+        
+    </div>
+</aside>
+
+
+
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/01/15/分享一个自用的部署和备份blog的脚本/">分享一个自用的部署和备份blog的脚本</a>
-    </h1>
+  
+  
+  <div id="cloud-tie-wrapper" class="cloud-tie-wrapper"></div>
+<script>
+  var cloudTieConfig = {
+    url: "http://canondin.cn/2018/03/14/Git配置多用户/", 
+    sourceId: "Git配置多用户",
+    productKey: "true",
+    target: "cloud-tie-wrapper"
+  };
+</script>
+<script src="//img1.cache.netease.com/f2e/tie/yun/sdk/loader.js"></script>
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">部署 备份</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/01/15/blog配置自定义域名/" class="archive-article-date">
-  	<time datetime="2018-01-15T07:46:59.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-01-15</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/01/15/blog配置自定义域名/">blog配置自定义域名</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">域名</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
   
 
-    
+  
 
 
           </div>
@@ -304,8 +366,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,
