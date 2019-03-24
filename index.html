@@ -149,6 +149,77 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-ARTS打卡第一周--20190324" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="ARTS打卡第一周–20190324"><a href="#ARTS打卡第一周–20190324" class="headerlink" title="ARTS打卡第一周–20190324"></a>ARTS打卡第一周–20190324</h2><h3 id="Algorithm-算法题-题目来源"><a href="#Algorithm-算法题-题目来源" class="headerlink" title="Algorithm:    算法题 题目来源"></a><strong>Algorithm:    算法题</strong> <a href="https://leetcode-cn.com/problems/two-sum/" target="_blank" rel="external">题目来源</a></h3><blockquote>
+<p><em>two sum</em> </p>
+<p>Given an array of integers, return <strong>indices</strong> of the two numbers such that they add up to a specific target.</p>
+<p>You may assume that each input would have <strong>exactly</strong> one solution, and you may not use the <em>same</em> element twice.</p>
+<p><strong>Example:</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">&gt; Given nums = [2, 7, 11, 15], target = 9,</div><div class="line">&gt; </div><div class="line">&gt; Because nums[0] + nums[1] = 2 + 7 = 9,</div><div class="line">&gt; return [0, 1].</div><div class="line">&gt;</div></pre></td></tr></table></figure>
+<p>这题对于第一次在leetcode做算法题的我来说，一上来想到的是最简单的暴力法，两次<code>for</code>循环便利下就出来了，如下面这样。显然是O(n^2)的时间复杂度，提交失败后，看了下答案用<code>hashMap</code>遍历一遍就可以。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">&gt; <span class="keyword">public</span> <span class="keyword">int</span>[] twoSum(<span class="keyword">int</span>[] nums, <span class="keyword">int</span> target) &#123;</div><div class="line">&gt;     <span class="keyword">int</span>[] indexs = <span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">2</span>];</div><div class="line">&gt;     <span class="keyword">boolean</span> b = <span class="keyword">false</span>;</div><div class="line">&gt;     <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; nums.length; i++) &#123;</div><div class="line">&gt;         <span class="keyword">for</span> (<span class="keyword">int</span> i1 = <span class="number">0</span>; i1 &lt; nums.length; i1++) &#123;</div><div class="line">&gt;             <span class="keyword">if</span> (nums[i] + nums[i1] == target) &#123;</div><div class="line">&gt;                 indexs[<span class="number">0</span>] = i;</div><div class="line">&gt;                 indexs[<span class="number">1</span>] = i1;</div><div class="line">&gt;                 b = <span class="keyword">true</span>;</div><div class="line">&gt;                 <span class="keyword">break</span>;</div><div class="line">&gt;             &#125;</div><div class="line">&gt;         &#125;</div><div class="line">&gt;         <span class="keyword">if</span> (b) &#123;</div><div class="line">&gt;             <span class="keyword">break</span>;</div><div class="line">&gt;         &#125;</div><div class="line">&gt;     &#125;</div><div class="line">&gt;     <span class="keyword">return</span> indexs;</div><div class="line">&gt; &#125;</div><div class="line">&gt;</div></pre></td></tr></table></figure>
+<p>使用<code>map</code>数据结构的好处就是可以把第一次计算的结果保存下来以便后面使用</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">&gt;   <span class="keyword">public</span> <span class="keyword">int</span>[] twoSum(<span class="keyword">int</span>[] nums, <span class="keyword">int</span> target) &#123;</div><div class="line">&gt;     Map&lt;Integer, Integer&gt; map = <span class="keyword">new</span> HashMap&lt;&gt;();</div><div class="line">&gt;     <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; nums.length; i++) &#123;</div><div class="line">&gt;         <span class="keyword">int</span> complement = target - nums[i];</div><div class="line">&gt;         <span class="keyword">if</span> (map.containsKey(complement)) &#123;</div><div class="line">&gt;             <span class="keyword">return</span> <span class="keyword">new</span> <span class="keyword">int</span>[] &#123; map.get(complement), i &#125;;</div><div class="line">&gt;         &#125;</div><div class="line">&gt;         map.put(nums[i], i);</div><div class="line">&gt;     &#125;</div><div class="line">&gt;     <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException(<span class="string">"No two sum solution"</span>);</div><div class="line">&gt; &#125;</div><div class="line">&gt;</div></pre></td></tr></table></figure>
+</blockquote>
+<h3 id="Review-阅读英文文章-文章来源"><a href="#Review-阅读英文文章-文章来源" class="headerlink" title="Review: 阅读英文文章 文章来源"></a><strong>Review: 阅读英文文章</strong> <a href="https://www.internalpointers.com/post/gentle-introduction-multithreading" target="_blank" rel="external">文章来源</a></h3><blockquote>
+<h6 id="多线程的简介-A-gentle-introduction-to-multithreading"><a href="#多线程的简介-A-gentle-introduction-to-multithreading" class="headerlink" title="多线程的简介(A gentle introduction to multithreading)"></a>多线程的简介(A gentle introduction to multithreading)</h6><p>主要对多线程的一些开篇介绍。以下摘录。</p>
+<p>[摘录]: <a href="https://viyine.github.io/2019/03/23/ARST-First-content/" target="_blank" rel="external">https://viyine.github.io/2019/03/23/ARST-First-content/</a></p>
+<h6 id="线程安全"><a href="#线程安全" class="headerlink" title="线程安全"></a>线程安全</h6><p>如果一段代码正确工作，即没有数据竞争或竞争条件，那么它就是线程安全的，即使许多线程同时执行它。可能已经注意到，一些编程库声明自己是线程安全的:如果正在编写多线程程序，那么希望确保任何其他第三方函数都可以跨不同的线程使用，而不会引发并发问题。</p>
+</blockquote>
+<h3 id="Tips-知识点，技术技巧"><a href="#Tips-知识点，技术技巧" class="headerlink" title="Tips:    知识点，技术技巧"></a><strong>Tips:    知识点，技术技巧</strong></h3><blockquote>
+<p>分享一下自己写的增量更新打包<code>class</code>的<code>shell</code>,在MacOS上可用，这个<code>shell</code>只是分享下思路，具体其中的一些目录要根据各人情况修改</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;</span> 1   #!/bin/bash</div><div class="line"><span class="meta">&gt;</span>   1 base_path=~/class_to_tar</div><div class="line"><span class="meta">&gt;</span>   2 #如果文件夹不存在，创建文件夹</div><div class="line"><span class="meta">&gt;</span>   3 if [ ! -d $base_path  ]; then</div><div class="line"><span class="meta">&gt;</span>   4   mkdir $base_path</div><div class="line"><span class="meta">&gt;</span>   5 fi</div><div class="line"><span class="meta">&gt;</span>   6 cd $base_path</div><div class="line"><span class="meta">&gt;</span>   7 #每次执行前先清空上次的Users目录</div><div class="line"><span class="meta">&gt;</span>   8 rm -rf $base_path/Users</div><div class="line"><span class="meta">&gt;</span>   9 #删除上次打包留下来的相同结尾的包</div><div class="line"><span class="meta">&gt;</span>  10 #rm -f *$1</div><div class="line"><span class="meta">&gt;</span>  11 webinf='WEB-INF'</div><div class="line"><span class="meta">&gt;</span>  12 zip to_$1 $2</div><div class="line"><span class="meta">&gt;</span>  13 unzip to_$1</div><div class="line"><span class="meta">&gt;</span>  #path-to-your-project/project-name替换成你的项目所在路径</div><div class="line"><span class="meta">&gt;</span>  14 cd $base_path/path-to-your-project/project-name/*/target/*/$webinf</div><div class="line"><span class="meta">&gt;</span>  15 cd ..</div><div class="line"><span class="meta">&gt;</span>  16 zip -r $1 $webinf/**/* $webinf/**</div><div class="line"><span class="meta">&gt;</span>  17 mv $1 $base_path</div><div class="line"><span class="meta">&gt;</span>  18</div><div class="line"><span class="meta">&gt;</span>  19 cd $base_path</div><div class="line"><span class="meta">&gt;</span>  20 #清除解压出来的目录</div><div class="line"><span class="meta">&gt;</span>  21 rm -rf $base_path/Users</div><div class="line"><span class="meta">&gt;</span>  22 rm -f to_$1</div><div class="line"><span class="meta">&gt;</span>  23 #echo "class打包完成"</div><div class="line"><span class="meta">&gt;</span></div></pre></td></tr></table></figure>
+</blockquote>
+<p>&gt;<br>&gt;</p>
+<h3 id="Share-分享"><a href="#Share-分享" class="headerlink" title="Share: 分享"></a><strong>Share: 分享</strong></h3><blockquote>
+<p>转眼工作已到第四个年头，真如左耳朵老师所说，大部分人不努力的程度只要正常努力就可以超过大部分人。可惜啊，我是一直有这个心，行动太少，每次定的计划很多，执行的和执行完成的却不多，这也是我的致命缺点。我也时常会想，看的小说动漫，哪怕中间断了几周个把月也还是会拾起来继续，现在看来，在学习这事上也要如此。象这种学习打卡方式的，首先还是要自我驱动，否则就是拿鞭子在后面抽也还是那样，该玩玩。</p>
+</blockquote>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/03/25/ARTS打卡第一周--20190324/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-Git配置多用户" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -804,7 +875,7 @@
   <div class="outer">
     <div id="footer-info">
     	<div class="footer-left">
-    		 &copy;2018 Abel・d
+    		 &copy;2019 Abel・d
     	</div>
       <span id="busuanzi_container_site_uv">
   累计访问 <span id="busuanzi_value_site_uv"></span>
